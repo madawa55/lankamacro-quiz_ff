@@ -4,25 +4,31 @@ IMAGE_NAME     := lankamacro-quiz
 CONTAINER_NAME := lankamacro-quiz-app
 PORT           := 3000
 
+# Auto-detect npm: check common nvm/node paths if npm is not on PATH
+NPM := $(shell which npm 2>/dev/null \
+	|| ls /usr/local/bin/npm 2>/dev/null \
+	|| ls $(HOME)/.nvm/versions/node/*/bin/npm 2>/dev/null | tail -1 \
+	|| echo npm)
+
 ## ─── Local Development ────────────────────────────────────────────────────────
 
 install:
-	npm install
+	$(NPM) install
 
 dev:
-	npm run dev
+	$(NPM) run dev
 
 build:
-	npm run build
+	$(NPM) run build
 
 start:
-	npm run start
+	$(NPM) run start
 
 clean:
-	npm run clean
+	$(NPM) run clean
 
 lint:
-	npm run lint
+	$(NPM) run lint
 
 ## ─── Docker ───────────────────────────────────────────────────────────────────
 
