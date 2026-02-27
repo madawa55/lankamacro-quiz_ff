@@ -1,13 +1,16 @@
 import { GoogleGenAI } from "@google/genai";
 
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY || "" });
-
-export async function generateNutritionVisual(prompt: string): Promise<string | null> {
+export async function generateEducationalImage(prompt: string): Promise<string | null> {
   try {
+    const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY || "" });
     const response = await ai.models.generateContent({
-      model: "gemini-2.5-flash-image",
+      model: 'gemini-2.5-flash-image',
       contents: {
-        parts: [{ text: `Educational nutrition visual for Sri Lankan software engineers: ${prompt}. Style: Modern, clean, professional infographic style.` }],
+        parts: [
+          {
+            text: prompt,
+          },
+        ],
       },
       config: {
         imageConfig: {

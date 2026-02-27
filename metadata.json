@@ -1,5 +1,5 @@
 {
-  "name": "LankaMacro Quiz",
-  "description": "A real-time interactive nutrition quiz for Sri Lankan software engineers to master their macronutrients.",
+  "name": "NutriQuiz: The Macro Masterclass",
+  "description": "An interactive nutrition and macro-based quiz game to educate participants on body types, food choices, and macronutrient management with real-time multiplayer support.",
   "requestFramePermissions": []
 }

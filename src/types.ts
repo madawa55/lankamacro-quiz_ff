@@ -1,42 +1,49 @@
 import { Type } from "@google/genai";
 
-export enum Round {
+export enum RoundType {
   THINK_AGAIN = "THINK AGAIN",
   REALITY_CHECK = "REALITY CHECK",
-  MACRO_INTELLIGENCE = "MACRO INTELLIGENCE",
+  MACRO_INTELLIGENCE = "MACRO INTELLIGENCE"
 }
 
 export interface Question {
   id: number;
-  round: Round;
+  round: RoundType;
   text: string;
   options: string[];
-  correctAnswer: number; // Index 0-3
+  correctAnswer: number; // 0-3
   explanation: string;
-  visualPrompt: string;
+  imagePrompt: string;
 }
 
 export interface Player {
   id: string;
   name: string;
   score: number;
-  answers: { [questionId: number]: { selected: number; isCorrect: boolean } };
-  isReady: boolean;
+  lastAnswer?: {
+    questionId: number;
+    answerIndex: number;
+    isCorrect: boolean;
+    timestamp: number;
+  };
 }
 
 export interface GameState {
   roomId: string;
-  status: 'waiting' | 'playing' | 'results' | 'finished';
+  status: 'waiting' | 'playing' | 'finished';
   currentQuestionIndex: number;
   players: Player[];
   startTime?: number;
 }
 
 export interface ServerToClientEvents {
-  gameUpdate: (state: GameState) => void;
-  questionStarted: (question: Question, timeLeft: number) => void;
-  showExplanation: (question: Question, results: any) => void;
-  gameOver: (leaderboard: Player[]) => void;
+  roomCreated: (roomId: string) => void;
+  playerJoined: (players: Player[]) => void;
+  gameStarted: () => void;
+  nextQuestion: (questionIndex: number, startTime: number) => void;
+  answerFeedback: (isCorrect: boolean, explanation: string, imageUrl?: string) => void;
+  gameStateUpdate: (state: GameState) => void;
+  gameFinished: (leaderboard: Player[]) => void;
   error: (message: string) => void;
 }
 
